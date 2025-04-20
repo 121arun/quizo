@@ -78,7 +78,7 @@ export const useQuiz = (questions: Question[]) => {
           ...prev,
           isCompleted: true,
         }));
-      }, 50);
+      }, 500);
     }
   }, [questions, quizState.currentQuestion]);
 

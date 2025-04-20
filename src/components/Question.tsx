@@ -194,7 +194,12 @@ const Question: React.FC<QuestionProps> = ({
 
     const actualTimeLeft = Math.max(0, question.timeLimit - ((Date.now() - questionStartTimeRef.current) / 1000));
     
-    onAnswer(optionIndex, actualTimeLeft);
+    // Add a delay before proceeding to the next question
+    setTimeout(() => {
+      if (isMountedRef.current) {
+        onAnswer(optionIndex, actualTimeLeft);
+      }
+    }, 400); // 0.4 seconds delay - adjust as needed
   }, [isAnswered, onAnswer, question.timeLimit]);
 
   // Main question timer
@@ -379,8 +384,8 @@ const Question: React.FC<QuestionProps> = ({
                 boxShadow="2xl"
                 animation={`${pulse} 1s infinite`}
               >
-                <Heading size="xl" mb={2} color={selectedOption === question.correctAnswer ? "green.500" : "red.500"}>
-                  {selectedOption === question.correctAnswer ? "CORRECT!" : "INCORRECT!"}
+                <Heading size="xl" mb={2} color={selectedOption === question.correctAnswer ? "blue.500" : "blue.500"}>
+                  {selectedOption === question.correctAnswer ? "Loading..." : "Loading..."}
                 </Heading>
               </Box>
             </SlideFade>
@@ -392,4 +397,4 @@ const Question: React.FC<QuestionProps> = ({
 };
 
 // Export memoized component for performance
-export default memo(Question); 
+export default memo(Question);
